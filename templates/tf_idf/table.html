@@ -6,13 +6,12 @@
 
 {% block style %}
     <style type="text/css">
-        TABLE {
+        table {
             border: 1px solid black;
         }
-        TD, TH {
+        td, th {
             padding: 3px;
             border: 1px solid black;
-            width: 80px;
         }
         thead {
             text-align: left;
@@ -23,25 +22,45 @@
 {% endblock %}
 
 {% block content %}
-    <table>
-        <thead>
-            <tr>
-                <td>word</td>
-                {% for name in file_names %}
-                    <td>tf ({{ name }})</td>
-                {% endfor %}
-                <td>idf</td>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in tf_idf_array %}
+    {% if page_obj %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ words|get_item:forloop.counter0 }}</td>
-                    {% for value in row %}
-                        <td>{{value}}</td>
+                    <td></td>
+                    <td>word</td>
+                    {% for name in file_names %}
+                        <td>tf ({{ name }})</td>
                     {% endfor %}
+                    <td>idf</td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for row in page_obj %}
+                    <tr>
+                        <td>{{ rows_counter_start|add:forloop.counter }}</td>
+                        {% for value in row %}
+                            <td>{{value}}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Первая</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+            {% endif %}
+
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Далее</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+            {% endif %}
+
+        </div>
+    {% else %}
+    Файл(ы) пусты
+    {% endif %}
 {% endblock %}
