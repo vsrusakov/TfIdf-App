@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Tf-Idf App{% endblock %}
+
+{% block content %}
+    <form enctype="multipart/form-data" method="post" action="{% url "tf_idf:process_form" %}">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Отправить"/>
+    </form>
+{% endblock %}
