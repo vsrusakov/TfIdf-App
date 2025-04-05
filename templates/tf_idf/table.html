@@ -1,7 +1,48 @@
 {% extends "base.html" %}
 
+{% load get_item %}
+
 {% block title %}Tf-Idf Table{% endblock %}
 
+{% block style %}
+    <style type="text/css">
+        TABLE {
+            {% comment %} width: 300px; /* Ширина таблицы */ {% endcomment %}
+            border: 1px solid black; /* Рамка вокруг таблицы */
+        }
+        TD, TH {
+            padding: 3px; /* Поля вокруг содержимого ячеек */
+            border: 1px solid black;
+            width: 80px;
+        }
+        thead {
+            text-align: left; /* Выравнивание по левому краю */
+            background: #c0c0c0; /* Цвет фона */
+            color: black; /* Цвет текста */
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
-    <h3>Привет!</h3>
+    <table>
+        <thead>
+            <tr>
+                <td>word</td>
+                {% for name in file_names %}
+                    <td>tf ({{ name }})</td>
+                {% endfor %}
+                <td>idf</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in tf_idf_array %}
+                <tr>
+                    <td>{{ words|get_item:forloop.counter0 }}</td>
+                    {% for value in row %}
+                        <td>{{value}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
