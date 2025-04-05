@@ -15,7 +15,6 @@ def process_form(request: HttpRequest):
     form = FilesForm(request.POST, request.FILES)
     if form.is_valid():
         cd = form.cleaned_data['files']
-        # file_names = [f.name for f in cd]
         file_names = [trunc_str(f.name, 8) for f in cd]
         corpus = [f.file for f in cd]
         words, tf_idf_array = compute_tf_idf(corpus)
