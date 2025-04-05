@@ -18,5 +18,6 @@ def process_form(request: HttpRequest):
         file_names = [f.name for f in cd]
         corpus = [f.file for f in cd]
         words, tf_idf_array = compute_tf_idf(corpus)
-        return render(request, 'tf_idf/table.html')
+        context = {'file_names': file_names, 'words': words, 'array': tf_idf_array}
+        return render(request, 'tf_idf/table.html', context=context)
     return redirect('tf_idf:index')
