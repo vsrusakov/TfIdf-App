@@ -13,7 +13,11 @@ def compute_tf_idf(
 ) -> tuple[WordList, TfIdfMatrix]:
 
     vectorizer = CountVectorizer(input='file')
-    X = vectorizer.fit_transform(corpus)
+
+    try:
+        X = vectorizer.fit_transform(corpus)
+    except ValueError:
+        return [], []
 
     count_array = X.toarray()
     tf_array = np.round(count_array / count_array.sum(axis=1).reshape(-1, 1), 3)
@@ -29,6 +33,10 @@ def compute_tf_idf(
     words = vectorizer.get_feature_names_out()[sort_idx]
 
     return words.tolist(), tf_idf_array.tolist()
+
+
+def trunc_str(line, width=12, placeholder='...'):
+    return f'{line[:width-3]}{placeholder}' if len(line) > width else line
 
 
 if __name__ == '__main__':

@@ -20,4 +20,4 @@ class MultipleFileField(forms.FileField):
 
 
 class FilesForm(forms.Form):
-    files = MultipleFileField(label='Выберите текстовые файлы')
+    files = MultipleFileField(label='Выберите текстовые файлы', allow_empty_file=True)
