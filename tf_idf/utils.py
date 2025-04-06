@@ -35,7 +35,7 @@ def compute_tf_idf(
     return words.tolist(), tf_idf_array.tolist()
 
 
-def trunc_str(line, width=12, placeholder='...'):
+def trunc_str(line, width=12, placeholder='...') -> str:
     return f'{line[:width-3]}{placeholder}' if len(line) > width else line
 
 

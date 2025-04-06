@@ -1,5 +1,7 @@
+from typing import Any
+
 from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView
 
 from tf_idf.forms import FilesForm
@@ -17,7 +19,7 @@ class TfIdfListView(ListView):
     template_name = 'tf_idf/table.html'
     allow_empty = True
 
-    def post(self, request):
+    def post(self, request) -> HttpResponseRedirect:
         form = FilesForm(request.POST, request.FILES)
         if form.is_valid():
             cd = form.cleaned_data['files']
@@ -32,7 +34,7 @@ class TfIdfListView(ListView):
             return redirect('tf_idf:process_form')
         return redirect('tf_idf:index')
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['file_names'] = self.file_names
 
