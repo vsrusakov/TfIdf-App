@@ -1,9 +1,9 @@
 from django.urls import path
-from tf_idf.views import index, process_form
+from tf_idf.views import index, TfIdfListView
 
 app_name = 'tf_idf'
 
 urlpatterns = [
     path('', index, name='index'),
-    path('process-form/', process_form, name='process_form'),
+    path('process-form/', TfIdfListView.as_view(), name='process_form'),
 ]
